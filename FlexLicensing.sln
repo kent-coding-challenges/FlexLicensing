@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexLicensing.Calculator", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexLicensing.ConsoleTests", "FlexLicensing.ConsoleTests\FlexLicensing.ConsoleTests.csproj", "{494515F7-F791-4882-B8B9-E4FB596F793E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexLicensing.InputReader", "FlexLicensing.InputReader\FlexLicensing.InputReader.csproj", "{4E38EDB6-18E1-461D-B165-F6C3EA1CC46A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{494515F7-F791-4882-B8B9-E4FB596F793E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{494515F7-F791-4882-B8B9-E4FB596F793E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{494515F7-F791-4882-B8B9-E4FB596F793E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E38EDB6-18E1-461D-B165-F6C3EA1CC46A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E38EDB6-18E1-461D-B165-F6C3EA1CC46A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E38EDB6-18E1-461D-B165-F6C3EA1CC46A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E38EDB6-18E1-461D-B165-F6C3EA1CC46A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

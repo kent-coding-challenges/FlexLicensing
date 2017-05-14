@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Comparer\IInstallLogComparer.cs" />
     <Compile Include="Enums\ComputerType.cs" />
     <Compile Include="Extensions\KeyValuePairExtension.cs" />
     <Compile Include="InstallWatcher.cs" />

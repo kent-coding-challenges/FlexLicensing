@@ -1,6 +1,6 @@
 # Project-Specific files/folders to be ignored:
 /FlexLicensing.ConsoleTests
-
+/FlexLicensing.InputReader
 
 ## Visual Studio .gitignore defaults:
 ## Ignore Visual Studio temporary files, build results, and

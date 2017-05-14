@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FlexLicensing.Calculator.Enums;
+using FlexLicensing.Calculator.Comparer;
 
 namespace FlexLicensing.Calculator.Models
 {
@@ -10,6 +11,8 @@ namespace FlexLicensing.Calculator.Models
     /// </summary>
     public class InstallLogSummary
     {
+        public uint UserID { get; private set; }
+
         /// <summary>
         ///     Dictionary which holds summarized information of each ComputerType with their number of installs.
         /// </summary>
@@ -21,8 +24,15 @@ namespace FlexLicensing.Calculator.Models
         /// <param name="logs">
         ///     Enumerable of InstallLog to be summarized.
         /// </param>
-        public InstallLogSummary(IEnumerable<InstallLog> logs)
+        public InstallLogSummary(IEnumerable<InstallLog> logs, uint userID)
         {
+            UserID = userID;
+
+            // Remove duplicates from logs.
+            var comparer = new InstallLogComparer();
+            logs = logs.Distinct(comparer).ToList();
+
+            // Initialize Summary object with data from logs.
             Summary = new Dictionary<ComputerType, uint>();
 
             var logsGroupedByComputerType = logs.GroupBy(x => x.ComputerType);
@@ -38,8 +48,9 @@ namespace FlexLicensing.Calculator.Models
         /// <param name="summary">
         ///     Summarized dictionary containing ComputerType, each containing its number of installs.
         /// </param>
-        public InstallLogSummary(Dictionary<ComputerType, uint> summary)
+        public InstallLogSummary(Dictionary<ComputerType, uint> summary, uint userID)
         {
+            UserID = userID;
             Summary = summary;
         }
         
@@ -51,7 +62,8 @@ namespace FlexLicensing.Calculator.Models
         /// </param>
         public InstallLogSummary(InstallLogSummary installLogSummary)
         {
-            this.Summary = installLogSummary?.Summary;
+            this.UserID = installLogSummary.UserID;
+            this.Summary = installLogSummary.Summary;
         }
 
         /// <summary>
