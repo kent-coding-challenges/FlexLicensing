@@ -68,14 +68,15 @@ This calculation module can be found in *GetMinLicenseRequired()* function in *L
 ```
 SET license = 0
 SET userLogs = logs.GroupBy(userID)
-FOREACH userLog in userLogs {
+FOREACH userLog in userLogs:
   GET summarized Dictionary<ComputerType, count> for current user
   SET licenseForUser = 0
   INCREMENT licenseForUser and consecutively apply this new license to computers belonging to users (using greedy approach).
   REPEAT previous step until:
-    MaxInstall for license is reached, all computers are licensed, or no more computer can be applied with license.
-  INCREMENT license by licenseForUser
-}
+    Current license exhausted (MaxInstall reached or no more computer can be licensed),
+    OR All computers have been licensed (completion)
+  license += licenseForUser
+  
 RETURN license
 ```
 
