@@ -1,61 +1,65 @@
 # FlexLicensing
-A coding challenge to calculate minimum number of licenses required given a dynamic software licensing rule which restricts the maximum installation allowed on different devices.
+A coding challenge to calculate minimum number of licenses required given a software licensing rule which restricts the maximum installation allowed on different devices.
 
 ## Problem Description
-Application license can be reused across different computers per user with specific restrictions. For insstance, each copy of application with ID 374 can be installed in two computers if at least one of them is a laptop. For documentation purpose, let's say AppID 374 is MS Office.
+Some vendors allow a user to reuse the same software license across different computers with specific restrictions. In this challenge, we have an application with ID 374 (let's say this is **MS Office**), where user can use one license to be installed in two computers if at least one of them is a laptop.
 
-The challenge is to create a class library which can calculate the minimum number of licenses a company must purchase to use MS Office.
-
-The program takes a CSV input file with the following headers: ComputerID, UserID, ApplicationID, ComputerType, Comment. The input data can contain duplicate records (which should be ignored), and casing for ComputerType is case-insensitive.
+Let's create a class lirbary which provides functionality to calculate minimum number of license a company must purchase given a CSV input file. The input file has the following headers: ComputerID, UserID, ApplicationID, ComputerType, Comment. Furthermore, the CSV can contain duplicate records (which should be ignored), comments are not to be considered in pulling the records, and casing for ComputerType is case-insensitive.
 
 ### Sample Input / Expected Output
 | ComputerID    | UserID        | ApplicationID  | ComputerType  | Comment                     |     
-| ------------- |:-------------:| --------------:|:-------------:| ---------------------------:|
+| ------------- |:------------- | -------------- |:------------- |:--------------------------- |
 | 1             | 1             | 374            | DESKTOP       | Exported from ....          |
 | 2             | 1             | 374            | DESKTOP       | Exported from ....          |
 | 2             | 1             | 374            | desktop       | Exported from ....          |
 | 3             | 2             | 374            | LAPTOP        | Exported from ....          |
 | 4             | 2             | 374            | DESKTOP       | Exported from ....          |
 
-Notice that row #2 and #3 with ComputerID = 2 are duplicates. Using the rule mentioned above for MS Office, User 1 requires 2 licenses and user 2 requires 1 license. Hence, the company needs to purchase a minimum of 2 MS Office licenses.
+In the sample input above, row #2 and #3 are duplicates. Hence, User #1 requires 2 license copies and User #2 requires 1 license copy. In this case, the company needs to purchase minimum of 3 licenses for its users.
 
 ### Input Size
-We are given two sample input csv. One with ~220'000 records (~10mb) called *sample-small.csv* and another with 22'000'000 records (~1gb) called *sample-large.csv*.
+Input size can be very large, as we are given these two sample files:
+**1. sample-small.csv** - ~220'000 records (10mb)
+**2. sample-large.csv** - ~220'000'000 records (1gb)
 
-### Input Analysis
-1. *Comment* column is not required for calculation purpose and can be ignored, considering input file size can be very large.
-2. Ideally, we should know all possible ComputerType beforehand. Hence, we can map this column as an Enum value.
-
-### Assumptions
-Unexpected situations won't have to be considered, such as empty input values, computers with multiple users or computers that are both dekstop and laptop.
+### Pre-mentioned Assumptions
+Unexpected situations won't have to be considered. This may include empty input values, computers with multiple users or computers that are both dekstop and laptop.
 
 ## Solution
 ### Input Reading Strategy
 To be added.
 
-### Problem-Specific Mathematical Model
-The model discussed in this section only works specifically for MS Office licensing rule, as stated above.
-
-Given two set of values, number of desktops and number of laptops, N1 and N2 with the following model:
+### License Rules Modelling
+To support dynamic licensing model, we are going to model License Rule in the following way:
+```c#
+int TotalMaxInstall;
+Dictionary<ComputerType, uint> MaxInstallPerComputerType;
 ```
-TotalMaxInstall: 2
+
+For instance, license rule for MS Office can be modelled in the following way:
+```
+TotalMaxInstall: 2,
 MaxInstallPerComputerType: {
   Desktop: 1,
   Laptop: 2
 }
 ```
 
-Number of min licenses required (Lc) can be modelled as below:
-// Lc = Min(N1, N2) + Math.Ceil(Max(N1, N2) / NRi)
-// Formula needs testing and more documentation, will update this soon.
+### Mathematical Model Attempt
+The following equation is an attempt to generalize this problem into a mathemetical model.
 
-### Data Modelling
-To be added.
+![FlexLicensing Initial Mathematical Model - kent](http://i.imgur.com/mSBKDrg.png)
 
-### Min License Calculation
+However, this mathematical model hasn't been fully worked out yet for the following scenarios:
+1. Different Ytotal instead of limiting Ytotal = Ymin + Ymax.
+2. When more ComputerTypes are considered (not only Desktop and Laptop).
+
+While I believe that the optimal solution lies in working out the above equation further to cover its current limitations, this mathematical model is temporarily dropped until it can be worked out further to remove its current limitations.
+
+### Current Implementation
 This calculation module can be found in *GetMinLicenseRequired()* function in *LicenseCalculator.cs*.
 
-Here's the general idea behinds this code:
+#### Algorithm
 ```
 SET license = 0
 SET userLogs = logs.GroupBy(userID)
@@ -69,3 +73,16 @@ FOREACH userLog in userLogs {
 }
 RETURN license
 ```
+
+#### Complexity of Current Implementation
+**O(UCLR)**
+
+where:
+U: number of users
+C: number of computer types
+L: number of min licenses (output)
+R: number of TotalMaxInstall specified in LicenseRule
+
+However, as C and R tends to be small, we can consider these two variables as constant values having int values less than 20. With this assumption, the complexity of current implementation can be rewritten as:
+
+**= O(UL)**
