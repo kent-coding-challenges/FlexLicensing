@@ -64,7 +64,7 @@ While I believe that the optimal solution lies in working out the above equation
 ### Current Implementation
 This calculation module can be found in *GetMinLicenseRequired()* function in *LicenseCalculator.cs*.
 
-#### Algorithm
+#### Here's the high-level view of how it's implemented:
 ```
 SET license = 0
 SET userLogs = logs.GroupBy(userID)
@@ -81,7 +81,7 @@ RETURN license
 ```
 
 #### Complexity of Current Implementation
-**O(UCLR)**
+The complexity of current implementation is **O(UCLR)**.
 
 where:
 ```
@@ -93,4 +93,4 @@ R: number of TotalMaxInstall specified in LicenseRule
 
 However, as C and R tends to be very small, we can consider these two variables as constant values <= 20. With this assumption, the complexity of current implementation can be rewritten as:
 
-**= O(UL)**
+Simplified Complexity: **O(UL)**
