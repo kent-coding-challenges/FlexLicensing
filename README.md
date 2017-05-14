@@ -1,4 +1,4 @@
-# FlexLicensing
+# Flex Licensing
 A coding challenge to calculate minimum number of licenses required given a software licensing rule which restricts the maximum installation allowed on different devices.
 
 ## Problem Description
@@ -19,8 +19,13 @@ In the sample input above, row #2 and #3 are duplicates. Hence, User #1 requires
 
 ### Input Size
 Input size can be very large, as we are given these two sample files:
-**1. sample-small.csv** - ~220'000 records (10mb)
-**2. sample-large.csv** - ~220'000'000 records (1gb)
+1. **sample-small.csv**
+
+Approximately 220'000 records (10mb)
+
+2. **sample-large.csv**
+
+Approximately 22'000'000 records (1gb)
 
 ### Pre-mentioned Assumptions
 Unexpected situations won't have to be considered. This may include empty input values, computers with multiple users or computers that are both dekstop and laptop.
@@ -83,6 +88,6 @@ C: number of computer types
 L: number of min licenses (output)
 R: number of TotalMaxInstall specified in LicenseRule
 
-However, as C and R tends to be small, we can consider these two variables as constant values having int values less than 20. With this assumption, the complexity of current implementation can be rewritten as:
+However, as C and R tends to be very small, we can consider these two variables as constant values <= 20. With this assumption, the complexity of current implementation can be rewritten as:
 
 **= O(UL)**
