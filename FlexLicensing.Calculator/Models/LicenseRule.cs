@@ -42,7 +42,7 @@ namespace FlexLicensing.Calculator.Models
         {
             // If either max install is 0, or all values in dictionary are 0,
             // Then model is not valid.
-            return !(TotalMaxInstall == 0 || MaxInstallPerComputerType.All(x => x.Value == 0));
+            return TotalMaxInstall == 0 || MaxInstallPerComputerType.All(x => x.Value == 0);
         }
 
         /// <summary>
