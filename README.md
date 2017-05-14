@@ -17,7 +17,7 @@ Let's create a class lirbary which provides functionality to calculate minimum n
 
 In the sample input above, row #2 and #3 are duplicates. Hence, User #1 requires 2 license copies and User #2 requires 1 license copy. In this case, the company needs to purchase minimum of 3 licenses for its users.
 
-### Input Size
+### Input Size Analysis
 Input size can be very large, as we are given these two sample files:
 1. **sample-small.csv**
 
@@ -27,12 +27,12 @@ Approximately 220'000 records (10mb)
 
 Approximately 22'000'000 records (1gb)
 
-### Pre-mentioned Assumptions
+### Allowed Assumptions
 Unexpected situations won't have to be considered. This may include empty input values, computers with multiple users or computers that are both dekstop and laptop.
 
 ## Solution
 ### Input Reading Strategy
-To be added.
+To be added. Waiting for follow-up question to handle this scenario.
 
 ### License Rules Modelling
 To support dynamic licensing model, we are going to model License Rule in the following way:
