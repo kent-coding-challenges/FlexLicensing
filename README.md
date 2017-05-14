@@ -83,14 +83,12 @@ RETURN license
 **O(UCLR)**
 
 where:
-
+```
 U: number of users
-
 C: number of computer types
-
 L: number of min licenses (output)
-
 R: number of TotalMaxInstall specified in LicenseRule
+```
 
 However, as C and R tends to be very small, we can consider these two variables as constant values <= 20. With this assumption, the complexity of current implementation can be rewritten as:
 
