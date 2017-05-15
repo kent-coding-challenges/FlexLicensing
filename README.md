@@ -32,7 +32,7 @@ Unexpected situations won't have to be considered. This may include empty input 
 
 ## Solution
 ### Input Reading Strategy
-To be added. Waiting for follow-up question to best handle this process.
+To be added.
 
 ### License Rules Modelling
 To support dynamic licensing model, we are going to model License Rule in the following way:
