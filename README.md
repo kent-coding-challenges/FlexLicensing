@@ -32,7 +32,11 @@ Unexpected situations won't have to be considered. This may include empty input 
 
 ## Solution
 ### Input Reading Strategy
-To be added.
+As the input size can be very large, we should separate Import and Calculation modules to be runnable separately. This way, the Import function (which is a heavy IO-bound operation) can be run once initially, and all subsequence calculations will be very fast.
+
+For the import module, we need to get slightly low level to improve efficiency, that is by using SqlBulkCopy and running several queries directly on the db context.
+
+Full operation is implemented in **FlexLicensing.Calculator/CsvHelper/InstallLogCsvHelper.cs**.
 
 ### License Rules Modelling
 To support dynamic licensing model, we are going to model License Rule in the following way:
