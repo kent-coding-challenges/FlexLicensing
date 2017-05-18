@@ -94,6 +94,9 @@ namespace FlexLicensing.Calculator.Database
             }
         }
 
+        /// <summary>
+        ///     Create temp table to temporarily store the imported CSV data.
+        /// </summary>
         private void CreateTempTable()
         {
             var sb = new StringBuilder();
@@ -107,12 +110,18 @@ namespace FlexLicensing.Calculator.Database
             dbContext.Database.ExecuteSqlCommand(query);
         }
 
+        /// <summary>
+        ///     Drop the temp table created.
+        /// </summary>
         private void DropTempTable()
         {
             string query = $"DROP TABLE { tempTableName }";
             dbContext.Database.ExecuteSqlCommand(query);
         }
 
+        /// <summary>
+        ///     Import from CSV to temp table.
+        /// </summary>
         private void ImportToTempTable()
         {
             string connectionString = dbContext.Database.Connection.ConnectionString;
@@ -156,6 +165,28 @@ namespace FlexLicensing.Calculator.Database
             }
         }
 
+        /// <summary>
+        ///     Copy distinct elements from temp table to InstallLogs table.
+        /// </summary>
+        private void CopyDistinctTempTableToDb()
+        {
+            string columns = "ApplicationID, UserID, ComputerID, ComputerType";
+
+            var sb = new StringBuilder();
+            sb.AppendLine($"TRUNCATE TABLE { tableName };");
+            sb.AppendLine($"INSERT INTO { tableName }");
+            sb.AppendLine($"({ columns })");
+            sb.AppendLine($"SELECT DISTINCT { columns } FROM { tempTableName }");
+
+            string query = sb.ToString();
+            dbContext.Database.ExecuteSqlCommand(query);
+        }
+
+
+
+        /// <summary>
+        ///     Helper function to create new SqlBulkCopy option with predefined options.
+        /// </summary>
         private SqlBulkCopy NewSqlBulkCopy(SqlConnection connection)
         {
             var sqlBulkCopy = new SqlBulkCopy(connection)
@@ -173,20 +204,9 @@ namespace FlexLicensing.Calculator.Database
             return sqlBulkCopy;
         }
 
-        private void CopyDistinctTempTableToDb()
-        {
-            string columns = "ApplicationID, UserID, ComputerID, ComputerType";
-
-            var sb = new StringBuilder();
-            sb.AppendLine($"TRUNCATE TABLE { tableName };");
-            sb.AppendLine($"INSERT INTO { tableName }");
-            sb.AppendLine($"({ columns })");
-            sb.AppendLine($"SELECT DISTINCT { columns } FROM { tempTableName }");
-
-            string query = sb.ToString();
-            dbContext.Database.ExecuteSqlCommand(query);
-        }
-        
+        /// <summary>
+        ///     Helper function to create new DataTable with predefined columns based on InstallLogs entity.
+        /// </summary>
         private DataTable NewDataTable()
         {
             DataTable dt = new DataTable();
@@ -200,6 +220,10 @@ namespace FlexLicensing.Calculator.Database
             return dt;
         }
 
+
+        /// <summary>
+        ///     Helper function to add CSV line to dt row if it matches the app id filter.
+        /// </summary>
         private void AddToDataTable(DataTable dt, string[] line)
         {
             DataRow row = dt.NewRow();
@@ -217,6 +241,9 @@ namespace FlexLicensing.Calculator.Database
             }
         }
 
+        /// <summary>
+        ///     Helper function to commit specified DataTable to database.
+        /// </summary>
         private void CommitDataTable(SqlBulkCopy sqlBulkCopy, SqlConnection sqlConnection, DataTable dt)
         {
             sqlBulkCopy.WriteToServer(dt);
@@ -227,6 +254,9 @@ namespace FlexLicensing.Calculator.Database
             dt = NewDataTable();
         }
 
+        /// <summary>
+        ///     Helper function to validate input file path exists.
+        /// </summary>
         private void ValidateInputFilePath()
         {
             if (!File.Exists(InputFilePath))

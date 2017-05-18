@@ -1,0 +1,5 @@
+﻿ComputerID,UserID,ApplicationID,ComputerType
+1,1,303,DESKTOP
+1,1,303,LAPTOP
+1,2,303,DESKTOP
+1,3,303,LAPTOP
