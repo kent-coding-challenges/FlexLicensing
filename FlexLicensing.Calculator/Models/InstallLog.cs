@@ -1,4 +1,6 @@
 ﻿using FlexLicensing.Calculator.Enums;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FlexLicensing.Calculator.Models
 {
@@ -10,9 +12,24 @@ namespace FlexLicensing.Calculator.Models
     /// </remarks>
     public class InstallLog
     {
-        public uint ComputerID { get; set; }
-        public uint UserID { get; set; }
-        public uint ApplicationID { get; set; }
+        /// <remarks>
+        ///     Defining a unique primary key will yield a better performance
+        ///      compared to defining 4 composite primary keys.
+        /// </remarks>
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ID { get; set; }
+
+        [Index("IX_UniqueInstallLog", IsUnique = true, Order = 1)]
+        public int ComputerID { get; set; }
+
+        [Index("IX_UniqueInstallLog", IsUnique = true, Order = 2)]
+        public int UserID { get; set; }
+
+        [Index("IX_UniqueInstallLog", IsUnique = true, Order = 3)]
+        public int ApplicationID { get; set; }
+
+        [Index("IX_UniqueInstallLog", IsUnique = true, Order = 4)]
         public ComputerType ComputerType { get; set; }
     }
 }

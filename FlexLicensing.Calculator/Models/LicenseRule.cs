@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FlexLicensing.Calculator.Enums;
 
@@ -14,12 +15,27 @@ namespace FlexLicensing.Calculator.Models
         /// </summary>
         public int TotalMaxInstall { get; set; }
 
+
         /// <summary>
         ///     Dictionary which holds the maximum number of installs required per ComputerType.
         ///     Note that specifying greater value for a ComputerType then allowed in TotalMaxInstall
         ///     will yield an invalid rule.
         /// </summary>
-        public Dictionary<ComputerType, uint> MaxInstallPerComputerType { get; set; }
+        public Dictionary<ComputerType, uint> MaxInstallPerComputerType { get; private set; }
+
+        /// <summary>
+        ///     Create a new instance of LicenseRule.
+        /// </summary>
+        public LicenseRule()
+        {
+            // Initialize MaxInstallPerComputerType to include all computer types with default value of 0.
+            MaxInstallPerComputerType = new Dictionary<ComputerType, uint>();
+            var computerTypes = Enum.GetValues(typeof(ComputerType)).Cast<ComputerType>();
+            foreach (var type in computerTypes)
+            {
+                MaxInstallPerComputerType.Add(type, 0);
+            }
+        }
 
         /// <summary>
         ///     Checks that specified rule is valid.

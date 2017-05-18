@@ -9,7 +9,7 @@ namespace FlexLicensing.Calculator.Models
     ///     Holds summarized information of InstallLogs,
     ///     storing the number of installations on each ComputerType.
     /// </summary>
-    public class InstallLogSummary
+    public class InstallLogUserSummary
     {
         public uint UserID { get; private set; }
 
@@ -24,7 +24,7 @@ namespace FlexLicensing.Calculator.Models
         /// <param name="logs">
         ///     Enumerable of InstallLog to be summarized.
         /// </param>
-        public InstallLogSummary(IEnumerable<InstallLog> logs, uint userID)
+        public InstallLogUserSummary(IEnumerable<InstallLog> logs, uint userID)
         {
             UserID = userID;
 
@@ -48,7 +48,7 @@ namespace FlexLicensing.Calculator.Models
         /// <param name="summary">
         ///     Summarized dictionary containing ComputerType, each containing its number of installs.
         /// </param>
-        public InstallLogSummary(Dictionary<ComputerType, uint> summary, uint userID)
+        public InstallLogUserSummary(Dictionary<ComputerType, uint> summary, uint userID)
         {
             UserID = userID;
             Summary = summary;
@@ -60,7 +60,7 @@ namespace FlexLicensing.Calculator.Models
         /// <param name="summary">
         ///     The source object to be copied from.
         /// </param>
-        public InstallLogSummary(InstallLogSummary installLogSummary)
+        public InstallLogUserSummary(InstallLogUserSummary installLogSummary)
         {
             this.UserID = installLogSummary.UserID;
             this.Summary = installLogSummary.Summary;

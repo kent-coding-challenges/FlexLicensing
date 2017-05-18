@@ -5,8 +5,8 @@
     /// </summary>
     public enum ComputerType
     {
-        Desktop,
-        Laptop,
-        Mobile
+        Desktop = 1,
+        Laptop = 2,
+        Mobile = 3
     }
 }

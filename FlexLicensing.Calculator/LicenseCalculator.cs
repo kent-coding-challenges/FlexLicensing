@@ -15,7 +15,7 @@ namespace FlexLicensing.Calculator
         ///     List of installation log summary for each user.
         ///     Each summary contains ComputerTypes and count for each type.
         /// </summary>
-        public List<InstallLogSummary> InstallSummaries { get; private set; }
+        public List<InstallLogUserSummary> InstallSummaries { get; private set; }
 
         /// <summary>
         ///     Licensing rule to apply for calculation.
@@ -32,7 +32,7 @@ namespace FlexLicensing.Calculator
         /// <param name="rule">
         ///     Licensing rule to apply for calculation.
         /// </param>
-        public LicenseCalculator(IEnumerable<InstallLogSummary> installLogSummaries, LicenseRule rule)
+        public LicenseCalculator(IEnumerable<InstallLogUserSummary> installLogSummaries, LicenseRule rule)
         {
             Rule = rule;
             InstallSummaries = installLogSummaries.ToList();
@@ -55,11 +55,11 @@ namespace FlexLicensing.Calculator
 
             var logsByUser = logs.GroupBy(x => x.UserID);
 
-            InstallSummaries = new List<InstallLogSummary>();
+            InstallSummaries = new List<InstallLogUserSummary>();
             foreach (var userLogs in logsByUser)
             {
-                uint userID = userLogs.Key;
-                var userSummary = new InstallLogSummary(userLogs, userID);
+                uint userID = (uint) userLogs.Key;
+                var userSummary = new InstallLogUserSummary(userLogs, userID);
                 InstallSummaries.Add(userSummary);
             }
 
