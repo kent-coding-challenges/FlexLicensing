@@ -100,4 +100,4 @@ However, as C and R tends to be very small, we can consider these two variables 
 Simplified Complexity: **O(UL)**
 
 #### Performance Analysis and Live Demo
-Go to http://kendtimothy.com/flexlicensing for live demo and performance analysis on how this coding challenge looks like. In here, you can also see the performance analysis for this calculation algorithm, which is around 17-34ms for sample-large.csv.
+Go to http://kendtimothy.com/flexlicensing for live demo on how this coding challenge looks like. In here, you can also see the performance analysis for this calculation algorithm, which is around 17-34ms for sample-large.csv.
