@@ -75,17 +75,20 @@ SET userLogs = logs.GroupBy(userID)
 FOREACH userLog in userLogs:
   GET summarized Dictionary<ComputerType, count> for current user
   SET licenseForUser = 0
-  INCREMENT licenseForUser and consecutively apply this new license to computers belonging to users (using greedy approach).
-  REPEAT previous step until:
-    Current license exhausted (MaxInstall reached or no more computer can be licensed),
-    OR All computers have been licensed (completion)
+  WHILE userLog.hasUnlicensedComputer:
+    licenseForUser++   // apply new license for user
+    SET currentInstall = 0
+    WHILE currentInstall < rule.MaxInstall AND userLog.hasUnlicensedComputer:
+      Apply license to next user's computer (using greedy approach)
+      currentInstall++
+      
   license += licenseForUser
   
 RETURN license
 ```
 
 #### Complexity of Current Implementation
-The complexity of current implementation is **O(UCLR)**.
+The complexity of current implementation is **O(ULCR)**.
 
 where:
 ```
